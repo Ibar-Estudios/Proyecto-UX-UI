@@ -364,7 +364,7 @@ export default function UserFlow() {
   const flujos = ufData.flujos || [];
 
   return (
-    <div className="min-h-[80vh] py-20 px-8">
+    <div className="min-h-[80vh] py-10 px-8">
       <div className="max-w-5xl mx-auto">
         <a href="/" className="inline-flex items-center gap-3 mb-20 text-blue-600 hover:text-blue-800 font-bold text-2xl">
           ← Volver Home
@@ -373,8 +373,8 @@ export default function UserFlow() {
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="space-y-14">
 
           {/* HEADER */}
-          <div className="text-center pt-4">
-            <h1 className="text-5xl lg:text-7xl font-black text-slate-900 mb-4">
+          <div className="text-center pt-2">
+            <h1 className="text-5xl lg:text-6xl font-black bg-clip-text text-blue-900 mb-4">
               {data?.title || 'User Flow 🗺️'}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-violet-600 mx-auto mb-8" />

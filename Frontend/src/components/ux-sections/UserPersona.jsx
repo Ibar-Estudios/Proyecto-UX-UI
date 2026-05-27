@@ -32,16 +32,34 @@ const PALETTES = {
   },
 };
 
-// ─── Avatar generado con iniciales ────────────────────────────────────────
+// ─── Mapa de imágenes por persona ─────────────────────────────────────────
+const AVATAR_IMAGES = {
+  'Matías García': '/images/Icons/perfil_matias.jpg',
+  'Valentina Ríos': '/images/Icons/perfil_valentina.jpg',
+};
+
+// ─── Avatar con imagen ────────────────────────────────────────────────────
 function Avatar({ nombre, palette, size = 'lg' }) {
-  const initials = nombre.split(' ').map(n => n[0]).join('').slice(0, 2);
-  const sizeClass = size === 'lg' ? 'w-24 h-24 text-3xl' : 'w-12 h-12 text-lg';
+  const src = AVATAR_IMAGES[nombre];
+  const sizePx = size === 'lg' ? 96 : 48;
+  const padding = size === 'lg' ? '10px' : '6px';
+
   return (
-    <div className={`${sizeClass} rounded-full bg-gradient-to-br ${palette.gradient} flex items-center justify-center font-black text-white shadow-xl flex-shrink-0`}>
-      {initials}
-    </div>
+    <img
+      src={src}
+      alt={nombre}
+      style={{
+        width: sizePx,
+        height: sizePx,
+        borderRadius: '50%',
+        padding,
+        background: palette || '#1a1830',
+        objectFit: 'cover',
+      }}
+    />
   );
 }
+
 
 // ─── Sección interna con ícono ─────────────────────────────────────────────
 function InfoSection({ titulo, icono, items, palette, delay = 0 }) {
@@ -208,7 +226,7 @@ export default function UserPersona() {
         >
           {/* ── HEADER ── */}
           <div className="text-center pt-4">
-            <h1 className="text-5xl lg:text-7xl font-black text-slate-900 mb-4">
+            <h1 className="text-5xl lg:text-6xl font-black bg-clip-text text-blue-900 mb-4">
               {data?.title || 'User Personas 👤'}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-rose-500 mx-auto mb-8" />
@@ -229,10 +247,10 @@ export default function UserPersona() {
                 ¿Por qué dos personas?
               </p>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Matías y Valentina representan los dos perfiles más frecuentes detectados en el research: 
-                el usuario que <span className="text-indigo-400 font-bold">pierde la noción del tiempo</span> durante la ejecución, 
-                y el usuario que <span className="text-rose-400 font-bold">tiene herramientas pero no logra mantener la constancia</span>. 
-                Ambos comparten el mismo problema central pero lo experimentan desde lugares diferentes, 
+                Matías y Valentina representan los dos perfiles más frecuentes detectados en el research:
+                el usuario que <span className="text-indigo-400 font-bold">pierde la noción del tiempo</span> durante la ejecución,
+                y el usuario que <span className="text-rose-400 font-bold">tiene herramientas pero no logra mantener la constancia</span>.
+                Ambos comparten el mismo problema central pero lo experimentan desde lugares diferentes,
                 lo que confirma que el producto debe resolver la ejecución — no solo la planificación.
               </p>
             </div>
@@ -267,8 +285,8 @@ export default function UserPersona() {
                 Matías — Origen en entrevistas
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">
-                Perfil construido a partir de <strong>Francisco</strong> (pérdida de noción temporal, necesidad de alertas) 
-                y <strong>Gastón</strong> (perfil control que revela qué mentalidad funciona). 
+                Perfil construido a partir de <strong>Francisco</strong> (pérdida de noción temporal, necesidad de alertas)
+                y <strong>Gastón</strong> (perfil control que revela qué mentalidad funciona).
                 Representa al usuario que planifica con intención pero falla por no percibir el tiempo.
               </p>
             </div>
@@ -277,8 +295,8 @@ export default function UserPersona() {
                 Valentina — Origen en entrevistas
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">
-                Perfil construido a partir de <strong>Barbara</strong> (horarios variables, sistema híbrido, necesidad de gamificación) 
-                y <strong>Constantino</strong> (saturación que genera ansiedad y abandono de actividades). 
+                Perfil construido a partir de <strong>Barbara</strong> (horarios variables, sistema híbrido, necesidad de gamificación)
+                y <strong>Constantino</strong> (saturación que genera ansiedad y abandono de actividades).
                 Representa al usuario que tiene herramientas pero no logra la constancia.
               </p>
             </div>

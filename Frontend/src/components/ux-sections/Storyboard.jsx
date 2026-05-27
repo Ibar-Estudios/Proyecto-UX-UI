@@ -131,6 +131,11 @@ export default function Storyboard() {
       transition={{ duration: 0.5 }}
       className="max-w-5xl mx-auto space-y-10 px-2 py-10"
     >
+      {/* Link para regresar al home */}
+      <a href="/" className="inline-flex items-center gap-3 text-blue-600 hover:text-blue-800 font-bold text-2xl">
+        ← Volver Home
+      </a>
+      
       {/* Header */}
       <div className="text-center pt-4">
         <h1 className="text-5xl lg:text-6xl font-bold bg-clip-text text-blue-900 mb-4">

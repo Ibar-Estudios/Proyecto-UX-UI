@@ -275,8 +275,9 @@ export default function Dendrograma() {
   const informe = dData.informe || {};
 
   return (
-    <div className="min-h-[80vh] py-20 px-8">
+    <div className="min-h-[80vh] py-10 px-8">
       <div className="max-w-6xl mx-auto">
+        {/* Link para regresar al home */}
         <a href="/" className="inline-flex items-center gap-3 mb-20 text-blue-600 hover:text-blue-800 font-bold text-2xl">
           ← Volver Home
         </a>
@@ -284,8 +285,8 @@ export default function Dendrograma() {
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="space-y-14">
 
           {/* HEADER */}
-          <div className="text-center pt-4">
-            <h1 className="text-5xl lg:text-7xl font-black text-slate-900 mb-4">{data?.title || 'Dendrograma 📊'}</h1>
+          <div className="text-center pt-2">
+            <h1 className="text-5xl lg:text-6xl font-black bg-clip-text text-blue-900 mb-4">{data?.title || 'Dendrograma 📊'}</h1>
             <div className="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-8" />
             <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">{data?.description}</p>
           </div>

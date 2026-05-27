@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-// Detecta si una card merece ancho completo por volumen de contenido
+// ─── Detecta cards anchas ──────────────────────────────────────────────────
 function isWideCard(value) {
   if (Array.isArray(value)) {
     const totalChars = value.join("").length;
@@ -12,6 +12,7 @@ function isWideCard(value) {
   return false;
 }
 
+// ─── Card de dato ──────────────────────────────────────────────────────────
 function DataCard({ cardKey, value, index }) {
   const wide = isWideCard(value);
 
@@ -20,22 +21,48 @@ function DataCard({ cardKey, value, index }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className={`bg-gradient-to-br from-slate-50 to-blue-50 p-8 rounded-2xl border border-slate-200 shadow-xl hover:shadow-2xl transition-all duration-300 ${
-        wide ? "col-span-full" : ""
-      }`}
+      style={{
+        background: "#13131f",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "16px",
+        padding: "1.75rem",
+        transition: "all 0.2s ease",
+        gridColumn: wide ? "1 / -1" : undefined,
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.background = "#1a1830";
+        e.currentTarget.style.borderColor = "rgba(129,140,248,0.25)";
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.background = "#13131f";
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+      }}
     >
-      <h3 className="text-xl font-bold text-slate-900 mb-5">
+      {/* Título de la card */}
+      <h3
+        style={{
+          fontSize: "11px",
+          fontWeight: 700,
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: "#818cf8",
+          marginBottom: "1rem",
+          margin: "0 0 1rem 0",
+        }}
+      >
         {cardKey}
       </h3>
 
+      {/* Array */}
       {Array.isArray(value) ? (
-        <ul className={`${wide ? "space-y-3" : "space-y-2"}`}>
+        <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {value.map((item, i) => {
-            // Separadores visuales para las líneas ━━━
             if (typeof item === "string" && item.startsWith("━")) {
-              return <li key={i} className="border-t border-slate-200 my-4" />;
+              return (
+                <li key={i} style={{ borderTop: "1px solid rgba(255,255,255,0.07)", margin: "12px 0" }} />
+              );
             }
-            // Labels de sección en negrita (FUENTE 1, COMENTARIO 1, etc.)
+
             const isLabel =
               typeof item === "string" &&
               (item.startsWith("📄") ||
@@ -49,13 +76,18 @@ function DataCard({ cardKey, value, index }) {
             if (isLink) {
               const url = item.replace("🔗 ", "");
               return (
-                <li key={i} className="flex items-center gap-2">
-                  <span className="text-blue-400">🔗</span>
+                <li key={i} style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+                  <span>🔗</span>
                   <a
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 underline text-sm hover:text-blue-800 break-all"
+                    style={{
+                      color: "#818cf8",
+                      fontSize: "12px",
+                      textDecoration: "underline",
+                      wordBreak: "break-all",
+                    }}
                   >
                     {url}
                   </a>
@@ -66,19 +98,34 @@ function DataCard({ cardKey, value, index }) {
             return (
               <li
                 key={i}
-                className={`flex items-start gap-3 ${
-                  isLabel ? "mt-4" : ""
-                } text-slate-700`}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                  marginBottom: "8px",
+                  marginTop: isLabel ? "14px" : 0,
+                }}
               >
                 {!isLabel && (
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
+                  <span
+                    style={{
+                      width: "5px",
+                      height: "5px",
+                      minWidth: "5px",
+                      borderRadius: "50%",
+                      background: "#6366f1",
+                      marginTop: "7px",
+                      flexShrink: 0,
+                    }}
+                  />
                 )}
                 <span
-                  className={
-                    isLabel
-                      ? "font-black text-slate-900 text-base"
-                      : "text-sm leading-relaxed"
-                  }
+                  style={{
+                    fontSize: isLabel ? "13px" : "13px",
+                    fontWeight: isLabel ? 800 : 400,
+                    color: isLabel ? "#e2e8f0" : "#94a3b8",
+                    lineHeight: 1.65,
+                  }}
                 >
                   {item}
                 </span>
@@ -86,54 +133,103 @@ function DataCard({ cardKey, value, index }) {
             );
           })}
         </ul>
-      ) : typeof value === "object" ? (
-        <div className="space-y-3">
+
+      ) : typeof value === "object" && value !== null ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {Object.entries(value).map(([k, v]) => (
-            <div key={k} className="p-4 bg-white rounded-xl border-l-4 border-blue-400">
-              <div className="font-bold text-slate-900 mb-2 capitalize">{k}:</div>
+            <div
+              key={k}
+              style={{
+                padding: "12px 14px",
+                background: "#0e0e1a",
+                borderLeft: "3px solid #4f46e5",
+                borderRadius: "0 10px 10px 0",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "#818cf8",
+                  textTransform: "capitalize",
+                  marginBottom: "6px",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                {k}
+              </div>
               {Array.isArray(v) ? (
-                <ul className="list-disc ml-6 space-y-1 text-slate-700">
-                  {v.map((item, i) => <li key={i}>{item}</li>)}
+                <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  {v.map((item, i) => (
+                    <li key={i} style={{ fontSize: "12.5px", color: "#94a3b8", marginBottom: "4px", paddingLeft: "10px" }}>
+                      · {item}
+                    </li>
+                  ))}
                 </ul>
               ) : (
-                <span className="font-medium text-slate-800 bg-blue-50 px-3 py-1 rounded-full">
+                <span
+                  style={{
+                    display: "inline-block",
+                    fontSize: "12px",
+                    fontWeight: 600,
+                    color: "#c7d2fe",
+                    background: "rgba(99,102,241,0.15)",
+                    padding: "3px 10px",
+                    borderRadius: "999px",
+                    border: "1px solid rgba(129,140,248,0.25)",
+                  }}
+                >
                   {v}
                 </span>
               )}
             </div>
           ))}
         </div>
+
       ) : (
-        <p className="text-slate-700 font-medium leading-relaxed">{value}</p>
+        <p style={{ fontSize: "13px", color: "#94a3b8", lineHeight: 1.7, margin: 0 }}>
+          {value}
+        </p>
       )}
     </motion.div>
   );
 }
 
+// ─── SectionViewer principal ───────────────────────────────────────────────
 export default function SectionViewer({ sectionName, title, description }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("🔍 Fetching:", sectionName);
     axios
       .get(`/ux-sections/${sectionName}`)
       .then((res) => {
-        console.log("✅ Data:", res.data);
         setData(res.data.data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("❌ Error:", err.response?.data || err.message);
+        console.error("Error:", err.response?.data || err.message);
         setLoading(false);
       });
   }, [sectionName]);
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
-        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent" />
-        <p className="text-xl text-gray-600">Cargando {title}...</p>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: "1rem" }}>
+        <div
+          style={{
+            width: "48px",
+            height: "48px",
+            borderRadius: "50%",
+            border: "3px solid rgba(99,102,241,0.2)",
+            borderTopColor: "#6366f1",
+            animation: "spin 0.8s linear infinite",
+          }}
+        />
+        <p style={{ fontSize: "13px", color: "#475569", letterSpacing: "0.1em" }}>
+          Cargando {title}...
+        </p>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
@@ -142,44 +238,64 @@ export default function SectionViewer({ sectionName, title, description }) {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-6xl mx-auto space-y-12"
+      style={{ maxWidth: "1152px", margin: "0 auto" }}
     >
       {/* HEADER */}
-      <div className="text-center pt-12">
-        <h1 className="text-5xl lg:text-7xl font-black text-blue-900  bg-clip-text mb-6">
+      <div style={{ textAlign: "center", paddingTop: "3rem", marginBottom: "3rem" }}>
+        <h1 className="text-5xl lg:text-6xl font-black bg-clip-text text-blue-900 mb-4">
           {data?.title || title}
         </h1>
-        <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-8" />
-        <p className="text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+
+        <div
+          style={{
+            width: "40px",
+            height: "1px",
+            background: "linear-gradient(90deg, transparent, #6366f1, transparent)",
+            margin: "0 auto 1.5rem",
+          }}
+        />
+
+        {/* DESCRIPCIÓN DE LA SECCIÓN */}
+        <p style={{ fontSize: "1rem", color: "#64748b", maxWidth: "600px", margin: "0 auto", lineHeight: 1.75 }}>
           {data?.description || description}
         </p>
       </div>
 
       {/* CONTENT HTML */}
       {data?.content && (
-        <div className="prose prose-lg lg:prose-xl max-w-none">
-          <div
-            className="bg-white/70 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-slate-200/50"
-            dangerouslySetInnerHTML={{
-              __html: data.content
-                .replace(
-                  /\*\*(.*?)\*\*/g,
-                  '<strong class="text-slate-900 font-black">$1</strong>'
-                )
-                .replace(/\n\n/g, '</p><p class="mb-8">')
-                .replace(/\n/g, "<br>")
-                .replace(
-                  /^/m,
-                  '<p class="mb-8 leading-relaxed text-lg text-slate-800">'
-                ),
-            }}
-          />
-        </div>
+        <div
+          style={{
+            background: "#13131f",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "20px",
+            padding: "2.5rem",
+            marginBottom: "2.5rem",
+          }}
+          dangerouslySetInnerHTML={{
+            __html: data.content
+              // Negritas: gris claro, visibles sobre fondo oscuro
+              .replace(/<strong(.*?)>(.*?)<\/strong>/g, '<strong$1 style="color:#155e75;font-weight:800;">$2</strong>')
+              // Párrafos: gris azulado (#94a3b8) para contraste suave
+              .replace(/<p(.*?)>/g, '<p$1 style="color:#94a3b8;margin-bottom:1.25rem;line-height:1.75;font-size:15px;">')
+              // Links: violeta (#818cf8) para armonizar con títulos y bullets
+              .replace(/<a /g, '<a style="color:#818cf8;text-decoration:underline; font-weight:600; font-size:14px; " ')
+              // Saltos de línea: convertir \n en <br> para mantener formato en textos largos
+              .replace(/\n/g, "<br>"),
+          }}
+        />
       )}
 
-      {/* DATA ESTRUCTURADA — grid adaptativo */}
+
+      {/* DATA ESTRUCTURADA */}
       {data?.data && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gap: "1rem",
+            paddingBottom: "3rem",
+          }}
+        >
           {Object.entries(data.data).map(([key, value], i) => (
             <DataCard key={key} cardKey={key} value={value} index={i} />
           ))}

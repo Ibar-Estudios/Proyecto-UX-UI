@@ -88,7 +88,7 @@ function ImageCard({ item, index, tipo }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className={`bg-white rounded-2xl border ${borderClass} shadow-lg overflow-hidden flex flex-col`}
+      className={`bg-gradient-to-br from-slate-200 to-blue-300 rounded-2xl border ${borderClass} shadow-lg overflow-hidden flex flex-col`}
     >
       <div className="px-5 pt-4 pb-3 flex items-center justify-between">
         <span className={`text-xs font-bold px-3 py-1 rounded-full border ${badgeClass}`}>
@@ -169,10 +169,15 @@ export default function Research() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-6xl mx-auto space-y-16 px-2 py-10"
+      className="max-w-6xl mx-auto space-y-16 px-10 py-5"
     >
+      {/* Link para regresar al home */}
+      <a href="/" className="inline-flex items-center gap-3 text-blue-600 hover:text-blue-800 font-bold text-2xl">
+        ← Volver Home
+      </a>
+
       {/* Header */}
-      <div className="text-center pt-4">
+      <div className="text-center">
         <h1 className="text-5xl lg:text-7xl font-black text-blue-900 mb-4">
           Research 🔍
         </h1>
@@ -185,7 +190,7 @@ export default function Research() {
       {/* Contexto general */}
       {data?.content && (
         <div
-          className="bg-white/70 backdrop-blur-xl rounded-3xl p-10 shadow-xl border border-slate-200/50"
+          className="bg-gradient-to-br from-slate-200 to-blue-300 backdrop-blur-xl rounded-3xl p-10 shadow-xl border border-slate-200/50"
           dangerouslySetInnerHTML={{
             __html: data.content
               .replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-black">$1</strong>')
@@ -200,10 +205,10 @@ export default function Research() {
         <section className="space-y-6">
           <div className="flex items-center gap-4">
             <div className="w-1 h-10 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full" />
-            <h2 className="text-3xl font-black text-slate-900">Investigación de Problemática</h2>
+            <h2 className="text-3xl font-black text-slate-700">Investigación de Problemática</h2>
           </div>
           <p className="text-slate-500 text-base">Artículos y fuentes académicas que corroboran el problema.</p>
-          <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl border border-slate-200 shadow-xl p-8">
+          <div className="bg-gradient-to-br from-slate-200 to-blue-300 rounded-2xl border border-slate-200 shadow-xl p-8">
             <ul className="space-y-2">
               {articulos.map((item, i) => <ArticleCard key={i} item={item} />)}
             </ul>
@@ -215,7 +220,7 @@ export default function Research() {
       <section className="space-y-6">
         <div className="flex items-center gap-4">
           <div className="w-1 h-10 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full" />
-          <h2 className="text-3xl font-black text-slate-900">Investigación de Usuarios</h2>
+          <h2 className="text-3xl font-black text-slate-700">Investigación de Usuarios</h2>
         </div>
         <p className="text-slate-500 text-base">
           Análisis de comentarios reales en redes sociales donde los usuarios discuten esta necesidad.
@@ -231,12 +236,12 @@ export default function Research() {
       <section className="space-y-6">
         <div className="flex items-center gap-4">
           <div className="w-1 h-10 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-full" />
-          <h2 className="text-3xl font-black text-slate-900">Noticias y Medios</h2>
+          <h2 className="text-3xl font-black text-slate-700">Noticias y Medios</h2>
         </div>
         <p className="text-slate-500 text-base">
           Cobertura periodística que confirma que el problema trasciende lo individual y es de escala social.
         </p>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 ">
           {NOTICIAS.map((item, i) => (
             <ImageCard key={i} item={item} index={i} tipo="noticia" />
           ))}
@@ -248,7 +253,7 @@ export default function Research() {
         <section className="space-y-6">
           <div className="flex items-center gap-4">
             <div className="w-1 h-10 bg-gradient-to-b from-orange-500 to-red-500 rounded-full" />
-            <h2 className="text-3xl font-black text-slate-900">Competidores Identificados</h2>
+            <h2 className="text-3xl font-black text-slate-700">Competidores Identificados</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {competidores.map((item, i) => (
@@ -257,7 +262,7 @@ export default function Research() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
-                className="bg-white border border-slate-200 rounded-2xl p-5 shadow-md"
+                className="bg-gradient-to-br from-slate-200 to-blue-300 border border-slate-200 rounded-2xl p-5 shadow-md"
               >
                 <p className="text-sm text-slate-700 leading-relaxed">{item}</p>
               </motion.div>
@@ -271,7 +276,7 @@ export default function Research() {
         <section className="space-y-6">
           <div className="flex items-center gap-4">
             <div className="w-1 h-10 bg-gradient-to-b from-slate-600 to-slate-900 rounded-full" />
-            <h2 className="text-3xl font-black text-slate-900">Conclusiones del Research</h2>
+            <h2 className="text-3xl font-black text-slate-700">Conclusiones del Research</h2>
           </div>
           <div className="bg-slate-900 rounded-2xl p-8 shadow-2xl">
             <ul className="space-y-4">
